@@ -19,9 +19,9 @@
 include_recipe "runit"
 include_recipe "java"
 
-#include_recipe "build-essential"
-#depends "zeromq"
-include_recipe "jzmq"
+include_recipe "build-essential"
+depends "zeromq"
+depends "jzmq"
 
 if ENV["deploy_build"] == "true" then
   log "The deploy_build value is true so un-deploy first"
