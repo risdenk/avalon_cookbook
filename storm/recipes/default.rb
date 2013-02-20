@@ -47,8 +47,12 @@ Chef::Log.debug(node[:opsworks][:layers]['zookeeper'][:instances])
 
 node[:opsworks][:layers]['zookeeper'][:instances].each do |n|
   Chef::Log.debug(n)
+  Chef::Log.debug(n[:fqdn])
+  Chef::Log.debug(n[:public_dns_name])
   zookeeper_quorum << n[:fqdn]
 end
+
+Chef::Log.debug(zookeeper_quorum)
 
 install_dir = "#{node['storm']['install_dir']}/storm-#{node['storm']['version']}"
 
