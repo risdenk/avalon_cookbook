@@ -99,7 +99,7 @@ execute "unzi[" do
   group   "storm"
   creates "#{node['storm']['install_dir']}/storm-#{node['storm']['version']}"
   cwd     "#{node['storm']['install_dir']}"
-  command "unzip /tmp/storm-#{node['storm']['version']}.tar.gz"
+  command "unzip /tmp/storm-#{node['storm']['version']}.zip"
 end
 
 # create a link from the specific version to a generic current folder
