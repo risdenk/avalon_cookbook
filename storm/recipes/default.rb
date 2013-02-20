@@ -37,8 +37,10 @@ end
 
 # search
 Chef::Log.debug("Nimbus nodes")
-Chef::Log.debug(node[:opsworks][:layers]['storm-nimbus'][:instances][0])
-storm_nimbus = node[:opsworks][:layers]['storm-nimbus'][:instances][0]
+Chef::Log.debug(node[:opsworks][:layers]['storm-nimbus'][:instances])
+node[:opsworks][:layers]['storm-nimbus'][:instances].ech do |k,v|
+  storm_nimbus = v[:public_dns_name]
+end
 Chef::Log.debug("Storm Nimbus")
 Chef::Log.debug(storm_nimbus)
 
