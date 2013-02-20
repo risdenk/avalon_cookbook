@@ -106,7 +106,7 @@ template "/etc/zookeeper/zoo.cfg" do
   variables(:servers => zk_servers)
 end
 
-include_recipe "zookeeper::ebs_volume"
+#include_recipe "zookeeper::ebs_volume"
 
 directory node[:zookeeper][:data_dir] do
   recursive true
