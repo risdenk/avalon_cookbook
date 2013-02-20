@@ -20,7 +20,7 @@ include_recipe "java"
 include_recipe "runit"
 
 remote_file "/tmp/zookeeper-#{node[:zookeeper][:version]}.tar.gz" do
-  source "http://mirrors.ibiblio.org/pub/mirrors/zookeeper/zookeeper-#{node[:zookeeper][:version]}/zookeeper-#{node[:zookeeper][:version]}.tar.gz"
+  source "http://mirrors.ibiblio.org/apache/zookeeper/zookeeper-#{node[:zookeeper][:version]}/zookeeper-#{node[:zookeeper][:version]}.tar.gz"
   mode "0644"
 end
 
