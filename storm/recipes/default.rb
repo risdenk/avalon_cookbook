@@ -19,8 +19,8 @@
 include_recipe "runit"
 include_recipe "java"
 
-include_recipe "build-essential"
-include_recipe "zeromq"
+#include_recipe "build-essential"
+#depends "zeromq"
 include_recipe "jzmq"
 
 if ENV["deploy_build"] == "true" then
