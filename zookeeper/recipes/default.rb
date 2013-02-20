@@ -45,21 +45,21 @@ end
   end
 end
 
-if node[:ec2]
-  directory "/mnt/zookeeper" do
-    owner "zookeeper"
-    group "nogroup"
-    mode 0755
-  end
+#if node[:ec2]
+#  directory "/mnt/zookeeper" do
+#    owner "zookeeper"
+#    group "nogroup"
+#    mode 0755
+#  end
 
-  # put lib dir on /mnt
-  mount "/var/lib/zookeeper" do
-    device "/mnt/zookeeper"
-    fstype "none"
-    options "bind,rw"
-    action :mount
-  end
-end
+#  # put lib dir on /mnt
+#  mount "/var/lib/zookeeper" do
+#    device "/mnt/zookeeper"
+#    fstype "none"
+#    options "bind,rw"
+#    action :mount
+#  end
+#end
 
 bash "untar zookeeper" do
   user "root"
