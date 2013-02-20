@@ -37,7 +37,7 @@ log node[:opsworks][:layers]['storm-nimbus'][:instances]
 storm_nimbus = node[:opsworks][:layers]['storm-nimbus'][:instances].first
 
 # search for zookeeper servers
-#zookeeper_quorum = Array.new
+zookeeper_quorum = Array.new
 #search(:node, "role:zookeeper AND chef_environment:#{node.chef_environment}").each do |n|
 #	zookeeper_quorum << n[:fqdn]
 #end
@@ -46,7 +46,7 @@ log "Zookeeper instances:"
 log node[:opsworks][:layers]['zookeeper'][:instances]
 
 node[:opsworks][:layers]['zookeeper'][:instances].each do |n|
-    zookeeper_quorem << n[:fqdn]
+    zookeeper_quorum << n[:fqdn]
 end
 
 install_dir = "#{node['storm']['install_dir']}/storm-#{node['storm']['version']}"
