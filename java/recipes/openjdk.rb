@@ -83,12 +83,12 @@ ruby_block "update-java-alternatives" do
       end
     end
   end
-  action :run_action
+  action :nothing
 end
 
 pkgs.each do |pkg|
   package pkg do
     action :install
-    notifies :run, resources(:ruby_block => "update-java-alternatives"), :immediately if ["ubuntu","debian","redhat","centos","fedora","scientific","amazon"].include?(node[:platform])
+    notifies :create, resources(:ruby_block => "update-java-alternatives"), :immediately if ["ubuntu","debian","redhat","centos","fedora","scientific","amazon"].include?(node[:platform])
   end
 end
