@@ -50,48 +50,45 @@ file "/etc/profile.d/jdk.sh" do
   mode 0755
 end
 
-Chef::Log.debug("TEST")
-if platform?("ubuntu","debian","redhat","centos","fedora","scientific","amazon")
-  ruby_block "update-java-alternatives" do
-    block do
-      arch = node['kernel']['machine'] =~ /x86_64/ ? "x86_64" : "i386"
-      arch = 'amd64' if arch == 'x86_64' && platform?("ubuntu") && node["platform_version"].to_f >= 12.04
-      if platform?("ubuntu", "debian") and jdk_version == 6
-        java_name = if node["platform_version"].to_f >= 11.10
-          "java-1.6.0-openjdk"
-        else
-          "java-6-openjdk"
-        end
-        java_name += "-i386" if arch == "i386" && node['platform_version'].to_f >= 12.04
-        Chef::ShellOut.new("update-java-alternatives","-s", java_name, :returns => [0,2]).run_command
-      else
-        # have to do this on ubuntu for version 7 because Ubuntu does
-        # not currently set jdk 7 as the default jvm on installation
-        require "fileutils"
-        Chef::Log.debug("glob is #{java_home_parent}/java*#{jdk_version}*openjdk*#{arch}")
-        jdk_home = Dir.glob("#{java_home_parent}/java*#{jdk_version}*openjdk*#{arch}").first
-        Chef::Log.debug("jdk_home is #{jdk_home}")
-        if jdk_home
-          FileUtils.rm_f java_home if ::File.exists? java_home
-          FileUtils.ln_sf jdk_home, java_home
-        end
-
-        cmd = Chef::ShellOut.new(
-          %Q[ update-alternatives --install /usr/bin/java java #{java_home}/bin/java 1;
+ruby_block "update-java-alternatives" do
+  block do
+    arch = node['kernel']['machine'] =~ /x86_64/ ? "x86_64" : "i386"
+    arch = 'amd64' if arch == 'x86_64' && node[:platform]?("ubuntu") && node["platform_version"].to_f >= 12.04
+    if node[:platform]?("ubuntu", "debian") and jdk_version == 6
+      java_name = if node["platform_version"].to_f >= 11.10
+                    "java-1.6.0-openjdk"
+                  else
+                    "java-6-openjdk"
+                  end
+      java_name += "-i386" if arch == "i386" && node['platform_version'].to_f >= 12.04
+      Chef::ShellOut.new("update-java-alternatives","-s", java_name, :returns => [0,2]).run_command
+    else
+      # have to do this on ubuntu for version 7 because Ubuntu does
+      # not currently set jdk 7 as the default jvm on installation
+      require "fileutils"
+      Chef::Log.debug("glob is #{java_home_parent}/java*#{jdk_version}*openjdk*#{arch}")
+      jdk_home = Dir.glob("#{java_home_parent}/java*#{jdk_version}*openjdk*#{arch}").first
+      Chef::Log.debug("jdk_home is #{jdk_home}")
+      if jdk_home
+        FileUtils.rm_f java_home if ::File.exists? java_home
+        FileUtils.ln_sf jdk_home, java_home
+      end
+      
+      cmd = Chef::ShellOut.new(
+                               %Q[ update-alternatives --install /usr/bin/java java #{java_home}/bin/java 1;
              update-alternatives --set java #{java_home}/bin/java  ]
-          ).run_command
-        unless cmd.exitstatus == 0 or  cmd.exitstatus == 2
-          Chef::Application.fatal!("Failed to update-alternatives for openjdk!")
-        end
+                               ).run_command
+      unless cmd.exitstatus == 0 or  cmd.exitstatus == 2
+        Chef::Application.fatal!("Failed to update-alternatives for openjdk!")
       end
     end
-    action :nothing
   end
+  action :nothing
 end
 
 pkgs.each do |pkg|
   package pkg do
     action :install
-    notifies :create, "ruby_block[update-java-alternatives]", :immediately if platform?("ubuntu","debian","redhat","centos","fedora","scientific","amazon")
+    notifies :create, "ruby_block[update-java-alternatives]", :immediately if node[:platform]?("ubuntu","debian","redhat","centos","fedora","scientific","amazon")
   end
 end
