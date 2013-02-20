@@ -32,8 +32,8 @@ end
 end
 
 # search
-log "Nimbus nodes"
-log node[:opsworks][:layers]['storm-nimbus'][:instances]
+Chef::Log.debug("Nimbus nodes")
+Chef::Log.debug(node[:opsworks][:layers]['storm-nimbus'][:instances])
 storm_nimbus = node[:opsworks][:layers]['storm-nimbus'][:instances].first
 
 # search for zookeeper servers
@@ -42,8 +42,8 @@ zookeeper_quorum = Array.new
 #	zookeeper_quorum << n[:fqdn]
 #end
 
-log "Zookeeper instances:"
-log node[:opsworks][:layers]['zookeeper'][:instances]
+Chef::Log.debug("Zookeeper instances:")
+Chef::Log.debug(node[:opsworks][:layers]['zookeeper'][:instances])
 
 node[:opsworks][:layers]['zookeeper'][:instances].each do |n|
     zookeeper_quorum << n[:fqdn]
