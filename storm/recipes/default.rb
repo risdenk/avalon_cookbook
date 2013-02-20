@@ -47,9 +47,8 @@ Chef::Log.debug(node[:opsworks][:layers]['zookeeper'][:instances])
 
 node[:opsworks][:layers]['zookeeper'][:instances].each do |n|
   Chef::Log.debug(n)
-  Chef::Log.debug(n[:fqdn])
   Chef::Log.debug(n[:public_dns_name])
-  zookeeper_quorum << n[:fqdn]
+  zookeeper_quorum << n[:public_dns_name]
 end
 
 Chef::Log.debug(zookeeper_quorum)
