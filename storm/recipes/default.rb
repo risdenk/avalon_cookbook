@@ -37,8 +37,8 @@ end
 
 # search
 Chef::Log.debug("Nimbus nodes")
-Chef::Log.debug(node[:opsworks][:layers]['storm-nimbus'][:instances])
-storm_nimbus = node[:opsworks][:layers]['storm-nimbus'][:instances].first
+Chef::Log.debug(node[:opsworks][:layers]['storm-nimbus'][:instances][0])
+storm_nimbus = node[:opsworks][:layers]['storm-nimbus'][:instances][0]
 Chef::Log.debug("Storm Nimbus")
 Chef::Log.debug(storm_nimbus)
 
@@ -94,7 +94,7 @@ remote_file "/tmp/storm-#{node[:storm][:version]}.zip" do
 end
 
 # uncompress the application tarball into the install directory
-execute "unzi[" do
+execute "unzip" do
   user    "storm"
   group   "storm"
   creates "#{node['storm']['install_dir']}/storm-#{node['storm']['version']}"
