@@ -85,21 +85,21 @@ end
 end
 
 # download storm
-remote_file "/tmp/storm-#{node[:storm][:version]}.tar.gz" do
-  source "#{node['storm']['download_url']}/storm-#{node['storm']['version']}.tar.gz"
+remote_file "/tmp/storm-#{node[:storm][:version]}.zip" do
+  source "#{node['storm']['download_url']}"
   owner  "storm"
   group  "storm"
   mode   00744
-  not_if "test -f /tmp/storm-#{node['storm']['version']}.tar.gz"
+  not_if "test -f /tmp/storm-#{node['storm']['version']}.zip"
 end
 
 # uncompress the application tarball into the install directory
-execute "tar" do
+execute "unzi[" do
   user    "storm"
   group   "storm"
   creates "#{node['storm']['install_dir']}/storm-#{node['storm']['version']}"
   cwd     "#{node['storm']['install_dir']}"
-  command "tar zxvf /tmp/storm-#{node['storm']['version']}.tar.gz"
+  command "unzip /tmp/storm-#{node['storm']['version']}.tar.gz"
 end
 
 # create a link from the specific version to a generic current folder

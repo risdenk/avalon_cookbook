@@ -6,10 +6,11 @@
 # Copyright 2012, Webtrends Inc.
 #
 
-default['storm']['version'] = "0.8.0"
+default['storm']['version'] = "0.8.2"
 default['storm']['install_dir'] = "/opt/storm"
 default['storm']['log_dir'] = "/var/log/storm"
 default['storm']['cluster_role'] = ""
+default['storm']['download_url'] = "https://dl.dropbox.com/u/133901206/storm-0.8.2.zip"
 
 # general storm attributes
 default['storm']['java_lib_path'] = "/usr/local/lib:/opt/local/lib:/usr/lib"
