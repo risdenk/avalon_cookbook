@@ -45,7 +45,7 @@ storm_nimbus = node[:opsworks][:layers]['storm-nimbus'][:instances].first
 log "Zookeeper instances:"
 log node[:opsworks][:layers]['zookeeper'][:instances]
 
-node[:opsworks][:layers]['zookeeper'][:instances].each do |n|:
+node[:opsworks][:layers]['zookeeper'][:instances].each do |n|
     zookeeper_quorem << n[:fqdn]
 end
 
