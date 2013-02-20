@@ -6,4 +6,7 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "1.0.28"
 depends          "java"
 depends          "runit"
+depends          "build-essential"
+depends          "zeromq"
+depends          "jzmq"
 supports         "ubuntu"
