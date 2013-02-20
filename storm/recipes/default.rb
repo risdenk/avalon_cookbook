@@ -35,6 +35,8 @@ end
 Chef::Log.debug("Nimbus nodes")
 Chef::Log.debug(node[:opsworks][:layers]['storm-nimbus'][:instances])
 storm_nimbus = node[:opsworks][:layers]['storm-nimbus'][:instances].first
+Chef::Log.debug("Storm Nimbus")
+Chef::Log.debug(storm_nimbus)
 
 # search for zookeeper servers
 zookeeper_quorum = Array.new
@@ -45,10 +47,10 @@ zookeeper_quorum = Array.new
 Chef::Log.debug("Zookeeper instances:")
 Chef::Log.debug(node[:opsworks][:layers]['zookeeper'][:instances])
 
-node[:opsworks][:layers]['zookeeper'][:instances].each do |n|
-  Chef::Log.debug(n)
-  Chef::Log.debug(n[:public_dns_name])
-  zookeeper_quorum << n[:public_dns_name]
+node[:opsworks][:layers]['zookeeper'][:instances].each do |k,v|
+  Chef::Log.debug(v)
+  Chef::Log.debug(v[:public_dns_name])
+  zookeeper_quorum << v[:public_dns_name]
 end
 
 Chef::Log.debug(zookeeper_quorum)
