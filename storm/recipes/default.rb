@@ -29,7 +29,7 @@ if ENV["deploy_build"] == "true" then
 end
 
 # install dependency packages
-%w{unzip python}.each do |pkg|
+%w{unzip python libzmq1 }.each do |pkg|
   package pkg do
     action :install
   end
