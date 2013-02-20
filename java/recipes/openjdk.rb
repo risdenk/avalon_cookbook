@@ -53,8 +53,8 @@ end
 ruby_block "update-java-alternatives" do
   block do
     arch = node['kernel']['machine'] =~ /x86_64/ ? "x86_64" : "i386"
-    arch = 'amd64' if arch == 'x86_64' && ["ubuntu"].include? node[:platform] && node["platform_version"].to_f >= 12.04
-    if ["ubuntu", "debian"].include? node[:platform] and jdk_version == 6
+    arch = 'amd64' if arch == 'x86_64' && ["ubuntu"].include?(node[:platform]) && node["platform_version"].to_f >= 12.04
+    if ["ubuntu", "debian"].include?(node[:platform]) and jdk_version == 6
       java_name = if node["platform_version"].to_f >= 11.10
                     "java-1.6.0-openjdk"
                   else
@@ -89,6 +89,6 @@ end
 pkgs.each do |pkg|
   package pkg do
     action :install
-    notifies :create, "ruby_block[update-java-alternatives]", :immediately if ["ubuntu","debian","redhat","centos","fedora","scientific","amazon"].include? node[:platform]
+    notifies :create, "ruby_block[update-java-alternatives]", :immediately if ["ubuntu","debian","redhat","centos","fedora","scientific","amazon"].include?(node[:platform])
   end
 end
