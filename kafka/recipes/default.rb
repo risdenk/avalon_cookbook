@@ -31,7 +31,7 @@ if node[:kafka][:broker_id].nil? || node[:kafka][:broker_id].empty?
 end
 
 if node[:kafka][:broker_host_name].nil? || node[:kafka][:broker_host_name].empty?
-    node[:kafka][:broker_host_name] = node[:fqdn]
+    node[:kafka][:broker_host_name] = node[:public_dns_name]
 end
 
 log "Broker id: #{node[:kafka][:broker_id]}"
@@ -123,11 +123,20 @@ end
 
 # grab the zookeeper nodes that are currently available
 zookeeper_pairs = Array.new
-if not Chef::Config.solo
-  search(:node, "role:zookeeper AND chef_environment:#{node.chef_environment}").each do |n|
-    zookeeper_pairs << n[:fqdn]
-  end
+
+Chef::Log.debug("Zookeeper instances:")
+Chef::Log.debug(node[:opsworks][:layers]['zookeeper'][:instances])
+
+node[:opsworks][:layers]['zookeeper'][:instances].each do |k,v|
+  Chef::Log.debug(v)
+  Chef::Log.debug(v[:public_dns_name])
+  zookeeper_pairs << v[:public_dns_name]
 end
+#if not Chef::Config.solo
+#  search(:node, "role:zookeeper AND chef_environment:#{node.chef_environment}").each do |n|
+#    zookeeper_pairs << n[:fqdn]
+#  end
+#end
 
 # append the zookeeper client port (defaults to 2181)
 i = 0
