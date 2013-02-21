@@ -85,7 +85,7 @@ end
 tarball = "kafka-#{node[:kafka][:version]}.tar.gz"
 download_file = "#{node[:kafka][:download_url]}/#{tarball}"
 
-remote_file "#{Chef::Config[:file_cache_path]}/#{tarball}" do
+remote_file "/tmp/#{tarball}" do
   source download_file
   mode 00644
   action :create_if_missing
@@ -103,7 +103,7 @@ execute "tar" do
   user  "root"
   group "root"
   cwd install_dir
-  command "tar zxvf #{Chef::Config[:file_cache_path]}/#{tarball}"
+  command "tar zxvf /tmp/#{tarball}"
 end
 
 template "#{install_dir}/bin/service-control" do
@@ -179,7 +179,7 @@ end
 execute "delete_install_source" do
   user "root"
   group "root"
-  command "rm -f #{Chef::Config[:file_cache_path]}/#{tarball}"
+  command "rm -f /tmp/#{tarball}"
   action :run
 end
 
