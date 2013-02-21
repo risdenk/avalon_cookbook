@@ -82,8 +82,8 @@ directory node[:kafka][:data_dir] do
 end
 
 # pull the remote file only if we create the directory
-tarball = "kafka-#{node[:kafka][:version]}.tar.gz"
-download_file = "#{node[:kafka][:download_url]}/#{tarball}"
+tarball = "kafka-#{node[:kafka][:version]}-incubating-src.tgz"
+download_file = "#{node[:kafka][:download_url]}/kafka/kafka-#{node[:kafka][:version]}-incubating/#{tarball}"
 
 remote_file "/tmp/#{tarball}" do
   source download_file
